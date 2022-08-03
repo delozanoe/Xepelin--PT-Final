@@ -1,26 +1,26 @@
 # Xepelin -PT Final
-El siguiente es la entraga de la prueba tecnica para el puesto de Producto Enginnering para Xepelin. 
+La siguiente es la entrega de la prueba técnica para el puesto de Producto Enginnering para Xepelin. 
 [Resultado final](https://62eaae2bb1e2ed059df9006e--lustrous-gingersnap-9fde1f.netlify.app)
 
-Contando de 2 partes, la primera 2 problemas de razonamientos logicos que fueron desarollados en python. La segunda, siendo un portal we donde debia tener un login basico y una lista con ids de tasa que permitia editiarlas y posteriormente se hacia el llamado a un API que envia un correo al usuario.
+Contando de 2 partes: La primera 2 problemas de razonamientos logicos que fueron desarollados en python. La segunda, siendo un portal we donde debia tener un login básico y una lista con ids de tasa que permitia editarlas y posteriormente se hacia el llamado a un API que envia un correo al usuario.
 
 ## Problemas logicos
-Desarrollado en python, los 2 cuentan se pueden correr independientes y con ingresar los datos requeridos por consola (y que seran solicitados) basta, para ver si correcto funcionamiento.
+Desarrollado en python: los 2 cuentan se pueden correr independientes y con ingresar los datos requeridos por consola (y que seran solicitados) basta, para ver si correcto funcionamiento.
 
 ## Desarrollo del caso
 ### Manejo de GSheet
-El sheet de google utilizado es el siguiente: [Gheet Utilizada](https://docs.google.com/spreadsheets/d/10KYwKdS3RPsnrUhuI3kb_gruvj5gYFYrINdDHwdxe8c/edit?usp=sharing) , esta ultima es una copa exacta de la que se me fue suministrada en la descripcion del problema. 
+El sheet de google utilizado es el siguiente: [Gheet Utilizada](https://docs.google.com/spreadsheets/d/10KYwKdS3RPsnrUhuI3kb_gruvj5gYFYrINdDHwdxe8c/edit?usp=sharing), ésta última es una copia exacta de la que me fue suministrada en la descripcion del problema. 
 
-Para hacer la lectura y moficiacion de los datos en esta, se creacion scripts utilizando la herramenta Apps Scrips, la cual es suminsitrada por el mismo google. Esta herramienta, permite hacer el manejo de GSheet y crear endpoints que correran scripts desarollados en .gs (lenjuaje especifico de la herramienta), esto con el fin de ser consumido por el front end. Es por esto que se implementan 2 servicios en especifico, uno para la obtener todos los datos del gsheet y otro para modificar una tasa con un id espefico (suministrados en los parametros query).
+Para hacer la lectura y modificación de los datos en ésta, se crearon scripts utilizando la herramienta Apps Scrips, la cual es suministrada por el mismo Google. Esta herramienta, permite hacer el manejo de GSheet y crear endpoints que correrán scripts desarrollados en .gs (lenjuaje especifico de la herramienta), esto con el fin de ser consumido por el Front-End. Es por eso que se implementan 2 servicios en específico; uno, para obtener todos los datos del Gsheet y otro para modificar una tasa con un id especifico (suministrados en los parámetros Query).
 
 ### LLamado al Hook
-Para el llamado al hook que enviara el correo (este fue suministrado por el equipo de Xepelin), fue necesario crear un pequeño API Rest (utilizando la libreria de pyhton FastAPI), esto pues no se podria hacer directamente el llamado por problemas de CORS. Para poder solucionar los problemas de CORS, es necesario modificar el servicio desde el servidor que lo expone o hacer el llamdo desde un lenguaje server-side, al no tener acceso al primero y sin poder hacer el llamado desde el front-end, se crea el API. Desarrollado en python y desplegado utilizando heroku, obeteneindo el siguiente endpoint: [API Heroku](https://xepelin-backpt.herokuapp.com) y con el servicio para hacer el llamado del WS (con el siguiente ejemplo):
+Para el llamado al hook que enviará el correo (este fue suministrado por el equipo de Xepelin), fue necesario crear un pequeño API Rest (utilizando la librería de pyhton FastAPI), esto pues no se podría hacer directamente el llamado por problemas de CORS. Para poder solucionarlo, es necesario modificar el servicio desde el servidor que lo expone o hacer el llamado desde un lenguaje server-side, al no tener acceso al primero y sin poder hacer el llamado desde el Front-End, se crea el API. Desarrollado en Python y desplegado utilizando Heroku, obteniendo el siguiente endpoint: [API Heroku](https://xepelin-backpt.herokuapp.com) y con el servicio para hacer el llamado del WS (con el siguiente ejemplo):
                 [WS Ejemplo](https://xepelin-backpt.herokuapp.com/send-email/?idOp=101&tasa=1,8&email=daniellozano.ee@gmail.com)
 
 ### Creacion del Front-End
-Para la creacion del Front-End de la aplicacion web, se hace un desarrollo con la liberia Ract.JS en donde se crean 2 paginas como componentes, una de login y otra para el manejo del GSheet.
+Para la creación del Front-End de la aplicación web, se hace un desarrollo con la librería Ract.JS en donde se crean 2 paginas como componentes, una de login y otra para el manejo del GSheet.
 
-Para el login, se desarrollo un login sencillo, verificando que el usuario y la contraseña coicidan con las de la siguiente base de datos.
+Para el login, se desarrolló un login sencillo, verificando que el usuario y la contraseña coincidan con las de la siguiente base de datos.
 
 
 | Username        | Password    |
@@ -32,13 +32,14 @@ Para el login, se desarrollo un login sencillo, verificando que el usuario y la 
 | admin@xepelin.com      | admin      |
 
 
-Una vez ingrese al portal, se empezara a cargar los datos de las GSheet, una vez cargados (esto por medio de fetch llamando al API de Apps Script, desarollado anteriormente) los datos, se observaran en la una tabla donde se podra modoficar las tasa de casa linea. En cada linea se motrara, el id y el correo al cual en caso de modificar la tasa se enviara el mail. Una vez modificada la casilla de la tasa, se desabilitaran las casillas de edicion mientras se envia el correo (por medio de fetch al API desarroollado y desplegado en Heroku), proceso el cual normalmente toma 2 segundos, esto para no generar confuciones y mitigar errores. 
+Una vez ingrese al portal, se empezará a cargar los datos de las GSheet, se realiza por medio de fetch llamando al API de Apps Script, desarrollado anteriormente. Al terminar el llamado, los datos, se observarán en una tabla donde se podrá modificar las tasas. En cada línea se mostrará, el id y el correo al cual en caso de modificar la tasa se enviará el mail. Una vez modificada la casilla de la tasa, se deshabilitarán las casillas de edición mientras se envía el correo (por medio de fetch al API desarrollado y desplegado en Heroku), proceso el cual normalmente toma 2 segundos, esto para no generar confusiones y mitigar errores. 
 
 
-Finalmente, se deja la posibiliddad de cerrar la sesion, con un boton a la derecha del logo de Xapier. 
+Finalmente, se deja la posibilidad de cerrar la sesión, con un botón a la derecha del logo de Xapier. 
 
 
-Si se desea conoder los repositios de los codigos desarrollados anteriormente, se puede encontrar en los siguientes links.
+Si se desea conocer los repositorios de los códigos desarrollados anteriormente, se puede encontrar en los siguientes links.
+
 
 [Back-End](https://github.com/delozanoe/xepelin-back/)
 [Front-End](https://github.com/delozanoe/Xepelin-PE-Test)
